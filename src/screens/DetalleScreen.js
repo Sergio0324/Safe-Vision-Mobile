@@ -6,12 +6,12 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
-  SafeAreaView,
   StyleSheet,
   Modal,
   TextInput,
   Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors, themes } from '../styles/colors';
 
@@ -100,7 +100,7 @@ export default function DetalleScreenPremium({ route, navigation }) {
         <View style={styles.headerContent}>
           <Text style={styles.headerTitle}>{inspeccion.categoria || 'Inspección'}</Text>
           <Text style={styles.headerDate}>
-            📅 {inspeccion.fecha_creacion?.split('T')[0] || 'Sin fecha'}
+            📅 {inspeccion.created_en?.split('T')[0] || 'Sin fecha'}
           </Text>
         </View>
       </LinearGradient>
@@ -195,11 +195,67 @@ export default function DetalleScreenPremium({ route, navigation }) {
           </View>
         </View>
 
+        {/* Información General */}
+        <View style={[styles.card, { backgroundColor: theme.card }]}>
+          <Text style={[styles.cardTitle, { color: theme.text }]}>
+            ℹ️ Información General
+          </Text>
+          {inspeccion.created_at && (
+            <View style={styles.summaryRow}>
+              <Text style={[styles.summaryLabel, { color: theme.textSecondary }]}>
+                Fecha Inspección:
+              </Text>
+              <Text style={[styles.summaryValue, { color: theme.text }]}>
+                {new Date(inspeccion.created_en).toLocaleString('es-CO')}
+              </Text>
+            </View>
+          )}
+          {inspeccion.ubicacion_descripcion && (
+            <View style={styles.summaryRow}>
+              <Text style={[styles.summaryLabel, { color: theme.textSecondary }]}>
+                Ubicación:
+              </Text>
+              <Text style={[styles.summaryValue, { color: theme.text }]}>
+                {inspeccion.ubicacion_descripcion}
+              </Text>
+            </View>
+          )}
+          {inspeccion.estado && (
+            <View style={styles.summaryRow}>
+              <Text style={[styles.summaryLabel, { color: theme.textSecondary }]}>
+                Estado Validación:
+              </Text>
+              <Text style={[styles.summaryValue, { color: theme.text }]}>
+                {inspeccion.estado?.toUpperCase()}
+              </Text>
+            </View>
+          )}
+        </View>
+
         {/* Análisis IA Completo */}
         <View style={[styles.card, { backgroundColor: theme.card }]}>
           <Text style={[styles.cardTitle, { color: theme.text }]}>
             🤖 Análisis IA Completo
           </Text>
+          {inspeccion.resultado_ia && (
+            <View style={styles.analysisSection}>
+              <Text style={[styles.sectionTitle, { color: theme.textSecondary }]}>
+                Datos IA:
+              </Text>
+              <View
+                style={[
+                  styles.hallazgoBox,
+                  { backgroundColor: theme.surface, borderLeftColor: colors.primary },
+                ]}
+              >
+                <Text style={[styles.hallazgoText, { color: theme.text }]}>
+                  {typeof inspeccion.resultado_ia === 'string'
+                    ? inspeccion.resultado_ia
+                    : JSON.stringify(inspeccion.resultado_ia, null, 2)}
+                </Text>
+              </View>
+            </View>
+          )}
           {inspeccion.descripcion && (
             <View style={styles.analysisSection}>
               <Text style={[styles.sectionTitle, { color: theme.textSecondary }]}>
@@ -210,7 +266,7 @@ export default function DetalleScreenPremium({ route, navigation }) {
               </Text>
             </View>
           )}
-          {inspeccion.hallazgo && (
+          {(inspeccion.hallazgo || inspeccion.hallazgo_texto) && (
             <View style={styles.analysisSection}>
               <Text style={[styles.sectionTitle, { color: theme.textSecondary }]}>
                 Hallazgo Principal:
@@ -222,7 +278,7 @@ export default function DetalleScreenPremium({ route, navigation }) {
                 ]}
               >
                 <Text style={[styles.hallazgoText, { color: theme.text }]}>
-                  {inspeccion.hallazgo}
+                  {inspeccion.hallazgo_texto || inspeccion.hallazgo}
                 </Text>
               </View>
             </View>

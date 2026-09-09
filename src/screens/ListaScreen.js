@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
-  SafeAreaView,
   Animated,
   RefreshControl,
   ScrollView
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { listarInspecciones } from '../services/api';
 import { colors, themes } from '../styles/colors';
@@ -230,7 +230,7 @@ export default function ListaScreenPremium({ navigation }) {
                 {item.categoria || 'Inspección'}
               </Text>
               <Text style={[styles.cardDate, { color: theme.textSecondary }]}>
-                📅 {item.fecha_creacion?.split('T')[0] || 'Sin fecha'}
+                📅 {item.created_en?.split('T')[0] || 'Sin fecha'}
               </Text>
             </View>
 

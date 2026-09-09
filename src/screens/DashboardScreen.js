@@ -3,12 +3,12 @@ import {
   View,
   Text,
   ScrollView,
-  SafeAreaView,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
 import { LineChart, BarChart, PieChart } from 'react-native-chart-kit';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors, themes } from '../styles/colors';
 

@@ -6,10 +6,12 @@ import {
   TouchableOpacity,
   ScrollView,
   Animated,
+  Image
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors } from '../styles/colors';
+import { logo} from '../assets/logo.png';
 
 export default function PrincipalScreenPremium({ navigation }) {
   const animatedValue = new Animated.Value(0);
@@ -50,14 +52,18 @@ export default function PrincipalScreenPremium({ navigation }) {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        {/* Logo/Header animado */}
-        <Animated.View style={[styles.header, pulseStyle]}>
-          <Text style={styles.logo}>🛡️</Text>
-          <Text style={styles.title}>SAFEVISION AI</Text>
-          <Text style={styles.subtitle}>
-            Auditoría Inteligente de Seguridad
-          </Text>
-        </Animated.View>
+      <Animated.View style={[styles.header, pulseStyle]}>
+  
+        <Image 
+          source={require('../assets/logo.png')} 
+          style={styles.logo}
+          resizeMode="contain"
+        />
+        <Text style={styles.title}>SAFEVISION AI</Text>
+        <Text style={styles.subtitle}>
+          Auditoría Inteligente de Seguridad
+        </Text>
+      </Animated.View>
 
         {/* Descripción breve */}
         <View style={styles.descriptionBox}>
@@ -463,5 +469,11 @@ const styles = StyleSheet.create({
     color: '#cbd5e1',
     lineHeight: 18,
     marginBottom: 6,
+  },
+  logo: {
+  width: 140,
+  height: 140,
+  marginBottom: 10,
+  alignSelf: 'center',
   },
 });
