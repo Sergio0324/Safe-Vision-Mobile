@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-//const API_BASE = 'https://safevision-backend-v2.onrender.com/api/v1';
-const API_BASE = 'http://192.168.20.23:8000/api/v1'
+const API_BASE = 'https://safevision-backend-v2.onrender.com/api/v1';
+//const API_BASE = 'http://192.168.20.23:8000/api/v1'
 
 // Crear instancia de axios con timeout
 const api = axios.create({
