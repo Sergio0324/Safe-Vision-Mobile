@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // Importar pantallas
 import PrincipalScreen from './src/screens/PrincipalScreen';
@@ -119,10 +120,11 @@ function TabNavigator() {
           paddingBottom: 8,
           paddingTop: 8,
           height: 70,
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
+          // Se quitó position:'absolute' + bottom/left/right: eso sacaba la
+          // barra del flujo normal y quedaba flotando ENCIMA del contenido
+          // de cada pantalla, tapando la parte de abajo. Sin "absolute",
+          // el navigator reserva su propio espacio y el contenido ya no
+          // se sobrepone.
         },
         tabBarLabelStyle: {
           fontSize: 15,
@@ -165,8 +167,13 @@ function TabNavigator() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <TabNavigator />
-    </NavigationContainer>
+    // SafeAreaProvider es requerido por el SafeAreaView de
+    // react-native-safe-area-context que usa PrincipalScreen; sin él los
+    // márgenes seguros (notch, barra de estado) no se calculan bien.
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <TabNavigator />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }

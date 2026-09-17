@@ -146,6 +146,8 @@ export const actualizarInspeccion = async (id, datos) => {
   }
 };
 
+
+
 // 5. CONECTAR AL BACKEND (verificar que esté disponible)
 export const verificarConexion = async () => {
   try {
