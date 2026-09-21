@@ -429,8 +429,10 @@ export default function CapturaScreenFinal({ navigation }) {
         </View>
       </View>
     );
-  } 
-r}
+  }
+
+  return null;
+}
 
 function BenefitItem({ icon, text }) {
   return (

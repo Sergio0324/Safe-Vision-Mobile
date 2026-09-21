@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const API_BASE = 'https://safevision-backend-v2.onrender.com/api/v1';
-//const API_BASE = 'http://192.168.20.23:8000/api/v1'
 
 // Crear instancia de axios con timeout
 const api = axios.create({
@@ -91,7 +90,6 @@ export const listarInspecciones = async (sedeId) => {
 
     return {
       success: true,
-      
       data: response.data || [],
     };
   } catch (error) {
@@ -144,6 +142,35 @@ export const actualizarInspeccion = async (id, datos) => {
     return {
       success: false,
       error: error.message || 'Error de conexión',
+    };
+  }
+};
+
+// 4b. VALIDAR INSPECCIÓN (aprobar / rechazar / marcar en revisión)
+// Ruta dedicada del backend: POST /inspecciones/{id}/validar
+export const validarInspeccion = async (id, datos) => {
+  try {
+    console.log('✅ Validando inspección:', id, datos);
+
+    const response = await api.post(`/inspecciones/${id}/validar`, datos);
+
+    console.log('✅ Inspección validada');
+
+    return {
+      success: true,
+      data: response.data,
+    };
+  } catch (error) {
+    // Si el body no coincide con lo que espera el backend, FastAPI
+    // devuelve un 422 con el detalle exacto del campo — lo exponemos
+    // para poder ajustar el payload sin necesitar ver el código del backend.
+    const detalleFastAPI = error.response?.data?.detail;
+    console.error('❌ Error al validar inspección:', error.message, detalleFastAPI);
+    return {
+      success: false,
+      error: detalleFastAPI
+        ? JSON.stringify(detalleFastAPI)
+        : error.message || 'Error de conexión',
     };
   }
 };

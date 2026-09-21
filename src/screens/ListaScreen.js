@@ -7,14 +7,21 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
+  SafeAreaView,
   Animated,
   RefreshControl,
   ScrollView
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { listarInspecciones } from '../services/api';
 import { colors, themes } from '../styles/colors';
+import {
+  getCategoria,
+  getFecha,
+  getNivelRiesgo,
+  getConfianza,
+  getConfianzaColor,
+} from './inspecciones';
 
 const theme = themes.dark;
 const SEDE_ID = '550e8400-e29b-41d4-a716-446655440000';
@@ -25,7 +32,7 @@ export default function ListaScreenPremium({ navigation }) {
   const [error, setError] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [filtro, setFiltro] = useState('todos');
-  
+
   // CORRECCIÓN 1: Iniciamos con un arreglo vacío e incluimos setAnimatedValues
   const [animatedValues, setAnimatedValues] = useState([]);
 
@@ -54,7 +61,7 @@ export default function ListaScreenPremium({ navigation }) {
 
         // Creamos un nuevo arreglo de valores en 0 para cada elemento
         const newAnimatedValues = newData.map(() => new Animated.Value(0));
-        
+
         // Guardamos en el estado
         setAnimatedValues(newAnimatedValues);
 
@@ -112,8 +119,8 @@ export default function ListaScreenPremium({ navigation }) {
 
   const filtrarInspecciones = () => {
     if (filtro === 'todos') return inspecciones;
-    return inspecciones.filter((ins) => 
-      ins.nivel_riesgo?.toLowerCase() === filtro.toLowerCase()
+    return inspecciones.filter(
+      (ins) => getNivelRiesgo(ins)?.toLowerCase() === filtro.toLowerCase()
     );
   };
 
@@ -193,6 +200,10 @@ export default function ListaScreenPremium({ navigation }) {
   const renderInspeccion = ({ item, index }) => {
     // Tomamos el valor animado del estado o forzamos 1 (visible) si no se encuentra
     const animValue = animatedValues[index] || new Animated.Value(1);
+    const nivelRiesgo = getNivelRiesgo(item);
+    const categoria = getCategoria(item);
+    const fecha = getFecha(item);
+    const confianza = getConfianza(item);
 
     return (
       <Animated.View
@@ -214,7 +225,7 @@ export default function ListaScreenPremium({ navigation }) {
         <TouchableOpacity
           style={[
             styles.inspeccionCard,
-            { backgroundColor: theme.card, borderLeftColor: getRiskColor(item.nivel_riesgo) },
+            { backgroundColor: theme.card, borderLeftColor: getRiskColor(nivelRiesgo) },
           ]}
           activeOpacity={1}
           onPress={() =>
@@ -227,10 +238,10 @@ export default function ListaScreenPremium({ navigation }) {
           <View style={styles.cardHeader}>
             <View style={styles.cardTitleSection}>
               <Text style={[styles.cardTitle, { color: theme.text }]}>
-                {item.categoria || 'Inspección'}
+                {categoria || 'Inspección'}
               </Text>
               <Text style={[styles.cardDate, { color: theme.textSecondary }]}>
-                📅 {item.created_en?.split('T')[0] || 'Sin fecha'}
+                📅 {fecha?.split('T')[0] || 'Sin fecha'}
               </Text>
             </View>
 
@@ -256,23 +267,45 @@ export default function ListaScreenPremium({ navigation }) {
               <Text style={[styles.riskLabel, { color: theme.textSecondary }]}>
                 Nivel de Riesgo:
               </Text>
-              <View
-                style={[
-                  styles.riskBadge,
-                  {
-                    backgroundColor: getRiskColor(item.nivel_riesgo) + '20',
-                    borderColor: getRiskColor(item.nivel_riesgo),
-                  },
-                ]}
-              >
-                <Text
+              <View style={styles.badgesRow}>
+                {confianza !== null && (
+                  <View
+                    style={[
+                      styles.scoreBadge,
+                      {
+                        backgroundColor: getConfianzaColor(confianza, colors) + '20',
+                        borderColor: getConfianzaColor(confianza, colors),
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.scoreBadgeText,
+                        { color: getConfianzaColor(confianza, colors) },
+                      ]}
+                    >
+                      {confianza}% conf.
+                    </Text>
+                  </View>
+                )}
+                <View
                   style={[
-                    styles.riskBadgeText,
-                    { color: getRiskColor(item.nivel_riesgo) },
+                    styles.riskBadge,
+                    {
+                      backgroundColor: getRiskColor(nivelRiesgo) + '20',
+                      borderColor: getRiskColor(nivelRiesgo),
+                    },
                   ]}
                 >
-                  {item.nivel_riesgo?.toUpperCase() || 'SIN EVALUAR'}
-                </Text>
+                  <Text
+                    style={[
+                      styles.riskBadgeText,
+                      { color: getRiskColor(nivelRiesgo) },
+                    ]}
+                  >
+                    {nivelRiesgo?.toUpperCase() || 'SIN EVALUAR'}
+                  </Text>
+                </View>
               </View>
             </View>
 
@@ -549,6 +582,11 @@ const styles = StyleSheet.create({
   riskLabel: {
     fontSize: 11,
   },
+  badgesRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
   riskBadge: {
     paddingVertical: 4,
     paddingHorizontal: 8,
@@ -556,6 +594,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   riskBadgeText: {
+    fontSize: 10,
+    fontWeight: 'bold',
+  },
+  scoreBadge: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 6,
+    borderWidth: 1,
+  },
+  scoreBadgeText: {
     fontSize: 10,
     fontWeight: 'bold',
   },

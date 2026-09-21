@@ -6,12 +6,11 @@ import {
   TouchableOpacity,
   ScrollView,
   Animated,
-  Image
+  Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors } from '../styles/colors';
-import { logo} from '../assets/logo.png';
 
 export default function PrincipalScreenPremium({ navigation }) {
   const animatedValue = new Animated.Value(0);
@@ -52,18 +51,18 @@ export default function PrincipalScreenPremium({ navigation }) {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-      <Animated.View style={[styles.header, pulseStyle]}>
-  
-        <Image 
-          source={require('../assets/logo.png')} 
-          style={styles.logo}
-          resizeMode="contain"
-        />
-        <Text style={styles.title}>SAFEVISION AI</Text>
-        <Text style={styles.subtitle}>
-          Auditoría Inteligente de Seguridad
-        </Text>
-      </Animated.View>
+        {/* Logo/Header animado */}
+        <Animated.View style={[styles.header, pulseStyle]}>
+          <Image
+            source={require('../assets/logo.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <Text style={styles.title}>SAFEVISION AI</Text>
+          <Text style={styles.subtitle}>
+            Auditoría Inteligente de Seguridad
+          </Text>
+        </Animated.View>
 
         {/* Descripción breve */}
         <View style={styles.descriptionBox}>
@@ -101,7 +100,7 @@ export default function PrincipalScreenPremium({ navigation }) {
           {/* Ver Inspecciones */}
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('Lista')}
+            onPress={() => navigation.navigate('ListaTab', { screen: 'Lista' })}
           >
             <LinearGradient
               colors={['#1e40af', '#1e3a8a']}
@@ -125,7 +124,7 @@ export default function PrincipalScreenPremium({ navigation }) {
           {/* Dashboard */}
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('Dashboard')}
+            onPress={() => navigation.navigate('DashboardTab', { screen: 'DashboardMain' })}
           >
             <LinearGradient
               colors={['#7c3aed', '#6d28d9']}
@@ -257,7 +256,8 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   logo: {
-    fontSize: 64,
+    width: 96,
+    height: 96,
     marginBottom: 16,
   },
   title: {
@@ -469,11 +469,5 @@ const styles = StyleSheet.create({
     color: '#cbd5e1',
     lineHeight: 18,
     marginBottom: 6,
-  },
-  logo: {
-  width: 140,
-  height: 140,
-  marginBottom: 10,
-  alignSelf: 'center',
   },
 });

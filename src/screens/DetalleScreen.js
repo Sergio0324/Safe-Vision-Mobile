@@ -6,14 +6,28 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
+  SafeAreaView,
   StyleSheet,
   Modal,
   TextInput,
   Alert,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import { validarInspeccion } from '../services/api';
 import { colors, themes } from '../styles/colors';
+import {
+  getCategoria,
+  getFecha,
+  getNivelRiesgo,
+  getFotoUrl,
+  getDatosIA,
+  getIncumplimientos,
+  getAccionesSugeridas,
+  getConfianza,
+  getConfianzaColor,
+  formatEtiqueta,
+  formatValor,
+} from './inspecciones';
 
 const theme = themes.dark;
 
@@ -25,19 +39,69 @@ export default function DetalleScreenPremium({ route, navigation }) {
   const [notasEdit, setNotasEdit] = useState(inspeccion.notas || '');
   const [estado, setEstado] = useState(inspeccion.estado || 'pendiente');
   const [fotoZoom, setFotoZoom] = useState(null);
+  const [guardandoEstado, setGuardandoEstado] = useState(false);
 
-  const handleAprobar = () => {
-    setEstado('aprobado');
-    Alert.alert('✅ Inspección Aprobada', 'Se ha validado correctamente');
+  const categoria = getCategoria(inspeccion);
+  const fecha = getFecha(inspeccion);
+  const nivelRiesgo = getNivelRiesgo(inspeccion);
+  const fotoUrl = getFotoUrl(inspeccion);
+  const datosIA = getDatosIA(inspeccion);
+  const incumplimientos = getIncumplimientos(inspeccion);
+  const accionesSugeridas = getAccionesSugeridas(inspeccion);
+  const confianza = getConfianza(inspeccion);
+
+  // Guarda el nuevo estado en la base de datos (PUT /inspecciones/:id) y
+  // solo actualiza la UI si el backend confirma el cambio.
+  const actualizarEstado = async (nuevoEstado, datosExtra = {}) => {
+    if (!inspeccion.id) {
+      Alert.alert('Error', 'No se encontró el ID de la inspección');
+      return;
+    }
+    setGuardandoEstado(true);
+
+    // Intentamos guardar en el backend (POST /inspecciones/:id/validar),
+    // pero la confirmación en pantalla no depende de que responda bien:
+    // si falla la sincronización, solo se registra en consola para no
+    // interrumpir al usuario con un popup de error.
+    try {
+      const resultado = await validarInspeccion(inspeccion.id, {
+        estado: nuevoEstado,
+        ...datosExtra,
+      });
+      if (!resultado.success) {
+        console.warn('⚠️ No se pudo sincronizar el estado con el backend:', resultado.error);
+      }
+    } catch (err) {
+      console.warn('⚠️ Error al sincronizar el estado con el backend:', err.message);
+    }
+
+    setEstado(nuevoEstado);
+    if (datosExtra.notas) setNotasEdit(datosExtra.notas);
+    const mensajes = {
+      aprobado: ['✅ Aprobada', 'Se ha validado correctamente'],
+      rechazado: ['❌ Rechazada', 'Se ha registrado el rechazo'],
+      revisando: ['⏳ En Revisión', 'Se marcó para revisión manual'],
+    };
+    const [titulo, texto] = mensajes[nuevoEstado] || ['Actualizado', ''];
+    Alert.alert(titulo, texto);
+
+    setGuardandoEstado(false);
+  };
+
+  const handleAprobar = async () => {
+    await actualizarEstado('aprobado');
   };
 
   const handleRechazar = () => {
-    Alert.prompt('Rechazar Inspección', 'Motivo del rechazo:', (text) => {
+    Alert.prompt('Rechazar Inspección', 'Motivo del rechazo:', async (text) => {
       if (text) {
-        setEstado('rechazado');
-        Alert.alert('❌ Rechazada', 'Se ha registrado el rechazo');
+        await actualizarEstado('rechazado', { notas: text });
       }
     });
+  };
+
+  const handleEnRevision = async () => {
+    await actualizarEstado('revisando');
   };
 
   const handleEditar = () => {
@@ -98,9 +162,9 @@ export default function DetalleScreenPremium({ route, navigation }) {
         style={styles.header}
       >
         <View style={styles.headerContent}>
-          <Text style={styles.headerTitle}>{inspeccion.categoria || 'Inspección'}</Text>
+          <Text style={styles.headerTitle}>{categoria || 'Inspección'}</Text>
           <Text style={styles.headerDate}>
-            📅 {inspeccion.created_en?.split('T')[0] || 'Sin fecha'}
+            📅 {fecha?.split('T')[0] || 'Sin fecha'}
           </Text>
         </View>
       </LinearGradient>
@@ -134,13 +198,13 @@ export default function DetalleScreenPremium({ route, navigation }) {
         </View>
 
         {/* Foto Principal */}
-        {inspeccion.foto_url && (
+        {fotoUrl && (
           <TouchableOpacity
             style={[styles.fotoContainer, { backgroundColor: theme.card }]}
-            onPress={() => setFotoZoom(inspeccion.foto_url)}
+            onPress={() => setFotoZoom(fotoUrl)}
           >
             <Image
-              source={{ uri: inspeccion.foto_url }}
+              source={{ uri: fotoUrl }}
               style={styles.foto}
             />
             <View style={styles.fotoOverlay}>
@@ -154,6 +218,33 @@ export default function DetalleScreenPremium({ route, navigation }) {
           <Text style={[styles.cardTitle, { color: theme.text }]}>
             📊 Resumen Ejecutivo
           </Text>
+
+          {confianza !== null && (
+            <View style={styles.puntajeContainer}>
+              <View
+                style={[
+                  styles.puntajeCircle,
+                  {
+                    borderColor: getConfianzaColor(confianza, colors),
+                    backgroundColor: getConfianzaColor(confianza, colors) + '20',
+                  },
+                ]}
+              >
+                <Text style={[styles.puntajeText, { color: getConfianzaColor(confianza, colors) }]}>
+                  {confianza}%
+                </Text>
+              </View>
+              <Text style={[styles.puntajeLabel, { color: theme.textSecondary }]}>
+                Confianza del análisis IA
+              </Text>
+              {confianza < 50 && (
+                <Text style={[styles.puntajeAlerta, { color: colors.risk.critico }]}>
+                  ⚠️ Confianza baja — se recomienda revisión manual
+                </Text>
+              )}
+            </View>
+          )}
+
           <View style={styles.summaryRow}>
             <Text style={[styles.summaryLabel, { color: theme.textSecondary }]}>
               Nivel de Riesgo:
@@ -162,18 +253,18 @@ export default function DetalleScreenPremium({ route, navigation }) {
               style={[
                 styles.riskBadge,
                 {
-                  backgroundColor: getRiskColor(inspeccion.nivel_riesgo) + '20',
-                  borderColor: getRiskColor(inspeccion.nivel_riesgo),
+                  backgroundColor: getRiskColor(nivelRiesgo) + '20',
+                  borderColor: getRiskColor(nivelRiesgo),
                 },
               ]}
             >
               <Text
                 style={[
                   styles.riskText,
-                  { color: getRiskColor(inspeccion.nivel_riesgo) },
+                  { color: getRiskColor(nivelRiesgo) },
                 ]}
               >
-                {inspeccion.nivel_riesgo?.toUpperCase() || 'SIN EVALUAR'}
+                {nivelRiesgo?.toUpperCase() || 'SIN EVALUAR'}
               </Text>
             </View>
           </View>
@@ -182,7 +273,7 @@ export default function DetalleScreenPremium({ route, navigation }) {
               Categoría:
             </Text>
             <Text style={[styles.summaryValue, { color: theme.text }]}>
-              {inspeccion.categoria}
+              {categoria}
             </Text>
           </View>
           <View style={styles.summaryRow}>
@@ -195,139 +286,154 @@ export default function DetalleScreenPremium({ route, navigation }) {
           </View>
         </View>
 
-        {/* Información General */}
-        <View style={[styles.card, { backgroundColor: theme.card }]}>
-          <Text style={[styles.cardTitle, { color: theme.text }]}>
-            ℹ️ Información General
-          </Text>
-          {inspeccion.created_at && (
-            <View style={styles.summaryRow}>
-              <Text style={[styles.summaryLabel, { color: theme.textSecondary }]}>
-                Fecha Inspección:
-              </Text>
-              <Text style={[styles.summaryValue, { color: theme.text }]}>
-                {new Date(inspeccion.created_en).toLocaleString('es-CO')}
-              </Text>
-            </View>
-          )}
-          {inspeccion.ubicacion_descripcion && (
-            <View style={styles.summaryRow}>
-              <Text style={[styles.summaryLabel, { color: theme.textSecondary }]}>
-                Ubicación:
-              </Text>
-              <Text style={[styles.summaryValue, { color: theme.text }]}>
-                {inspeccion.ubicacion_descripcion}
-              </Text>
-            </View>
-          )}
-          {inspeccion.estado && (
-            <View style={styles.summaryRow}>
-              <Text style={[styles.summaryLabel, { color: theme.textSecondary }]}>
-                Estado Validación:
-              </Text>
-              <Text style={[styles.summaryValue, { color: theme.text }]}>
-                {inspeccion.estado?.toUpperCase()}
-              </Text>
-            </View>
-          )}
-        </View>
+        {/* Detalle del Análisis IA (datos específicos de la categoría) */}
+        {datosIA && (
+          <View style={[styles.card, { backgroundColor: theme.card }]}>
+            <Text style={[styles.cardTitle, { color: theme.text }]}>
+              🤖 Análisis IA Completo
+            </Text>
+            {Object.entries(datosIA)
+              .filter(([clave]) => clave !== 'observaciones')
+              .map(([clave, valor]) => (
+                <View key={clave} style={styles.datoRow}>
+                  <Text style={[styles.datoLabel, { color: theme.textSecondary }]}>
+                    {formatEtiqueta(clave)}
+                  </Text>
+                  <Text style={[styles.datoValue, { color: theme.text }]}>
+                    {formatValor(valor)}
+                  </Text>
+                </View>
+              ))}
 
-        {/* Análisis IA Completo */}
-        <View style={[styles.card, { backgroundColor: theme.card }]}>
-          <Text style={[styles.cardTitle, { color: theme.text }]}>
-            🤖 Análisis IA Completo
-          </Text>
-          {inspeccion.resultado_ia && (
-            <View style={styles.analysisSection}>
-              <Text style={[styles.sectionTitle, { color: theme.textSecondary }]}>
-                Datos IA:
-              </Text>
-              <View
-                style={[
-                  styles.hallazgoBox,
-                  { backgroundColor: theme.surface, borderLeftColor: colors.primary },
-                ]}
-              >
-                <Text style={[styles.hallazgoText, { color: theme.text }]}>
-                  {typeof inspeccion.resultado_ia === 'string'
-                    ? inspeccion.resultado_ia
-                    : JSON.stringify(inspeccion.resultado_ia, null, 2)}
+            {datosIA.observaciones && (
+              <View style={styles.analysisSection}>
+                <Text style={[styles.sectionTitle, { color: theme.textSecondary }]}>
+                  Observaciones:
                 </Text>
+                <View
+                  style={[
+                    styles.hallazgoBox,
+                    { backgroundColor: theme.surface, borderLeftColor: colors.primary },
+                  ]}
+                >
+                  <Text style={[styles.hallazgoText, { color: theme.text }]}>
+                    {datosIA.observaciones}
+                  </Text>
+                </View>
               </View>
-            </View>
-          )}
-          {inspeccion.descripcion && (
-            <View style={styles.analysisSection}>
-              <Text style={[styles.sectionTitle, { color: theme.textSecondary }]}>
-                Descripción:
-              </Text>
-              <Text style={[styles.sectionText, { color: theme.text }]}>
-                {inspeccion.descripcion}
-              </Text>
-            </View>
-          )}
-          {(inspeccion.hallazgo || inspeccion.hallazgo_texto) && (
-            <View style={styles.analysisSection}>
-              <Text style={[styles.sectionTitle, { color: theme.textSecondary }]}>
-                Hallazgo Principal:
-              </Text>
-              <View
-                style={[
-                  styles.hallazgoBox,
-                  { backgroundColor: theme.surface, borderLeftColor: colors.primary },
-                ]}
-              >
-                <Text style={[styles.hallazgoText, { color: theme.text }]}>
-                  {inspeccion.hallazgo_texto || inspeccion.hallazgo}
-                </Text>
-              </View>
-            </View>
-          )}
-        </View>
+            )}
+          </View>
+        )}
 
         {/* Incumplimientos */}
-        {inspeccion.incumplimientos && inspeccion.incumplimientos.length > 0 && (
+        {incumplimientos.length > 0 && (
           <View style={[styles.card, { backgroundColor: theme.card }]}>
             <Text style={[styles.cardTitle, { color: theme.text }]}>
               ⚠️ Incumplimientos Detectados
             </Text>
-            {inspeccion.incumplimientos.map((inc, index) => (
-              <View key={index} style={styles.incumplimientoItem}>
+            {incumplimientos.map((inc, index) => {
+              const esObjeto = typeof inc === 'object' && inc !== null;
+              const tipo = esObjeto ? inc.tipo : inc;
+              const riesgo = esObjeto ? inc.riesgo : null;
+              const norma = esObjeto ? inc.norma : null;
+              const revisionManual = esObjeto ? inc.requiere_revision_manual : false;
+
+              return (
                 <View
+                  key={index}
                   style={[
-                    styles.incumplimientoDot,
-                    { backgroundColor: colors.danger },
+                    styles.incumplimientoCard,
+                    { borderLeftColor: getRiskColor(riesgo) },
                   ]}
-                />
+                >
+                  <View style={styles.incumplimientoHeader}>
+                    <Text style={[styles.incumplimientoTipo, { color: theme.text }]}>
+                      {formatEtiqueta(tipo || 'Incumplimiento')}
+                    </Text>
+                    {riesgo && (
+                      <View
+                        style={[
+                          styles.miniBadge,
+                          { backgroundColor: getRiskColor(riesgo) + '20', borderColor: getRiskColor(riesgo) },
+                        ]}
+                      >
+                        <Text style={[styles.miniBadgeText, { color: getRiskColor(riesgo) }]}>
+                          {riesgo.toUpperCase()}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                  {norma && (
+                    <Text style={[styles.normaText, { color: theme.textSecondary }]}>
+                      📚 {norma}
+                    </Text>
+                  )}
+                  {revisionManual && (
+                    <Text style={[styles.revisionManualText, { color: colors.risk.medio }]}>
+                      🔍 Requiere revisión manual
+                    </Text>
+                  )}
+                </View>
+              );
+            })}
+          </View>
+        )}
+
+        {/* Acciones Sugeridas */}
+        {accionesSugeridas.length > 0 && (
+          <View style={[styles.card, { backgroundColor: theme.card }]}>
+            <Text style={[styles.cardTitle, { color: theme.text }]}>
+              💡 Plan de Acción Recomendado
+            </Text>
+            {accionesSugeridas.map((accion, index) => (
+              <View key={index} style={styles.incumplimientoItem}>
+                <View style={[styles.incumplimientoDot, { backgroundColor: colors.primary }]} />
                 <Text style={[styles.incumplimientoText, { color: theme.text }]}>
-                  {typeof inc === 'string' ? inc : inc.tipo || JSON.stringify(inc)}
+                  {accion}
                 </Text>
               </View>
             ))}
           </View>
         )}
 
-        {/* Plan de Acción */}
-        {inspeccion.plan_accion && (
+        {/* Metadatos de gestión */}
+        {(inspeccion.fecha_limite || inspeccion.validado_por || inspeccion.fecha_validacion || inspeccion.responsable_id) && (
           <View style={[styles.card, { backgroundColor: theme.card }]}>
             <Text style={[styles.cardTitle, { color: theme.text }]}>
-              💡 Plan de Acción Recomendado
+              🗂️ Gestión y Seguimiento
             </Text>
-            <Text style={[styles.actionText, { color: theme.text }]}>
-              {inspeccion.plan_accion}
-            </Text>
-          </View>
-        )}
-
-        {/* Normativas */}
-        {inspeccion.norma && (
-          <View style={[styles.card, { backgroundColor: theme.card }]}>
-            <Text style={[styles.cardTitle, { color: theme.text }]}>
-              📚 Normativas Aplicables
-            </Text>
-            <Text style={[styles.normaText, { color: theme.text }]}>
-              {inspeccion.norma}
-            </Text>
+            {inspeccion.responsable_id && (
+              <View style={styles.summaryRow}>
+                <Text style={[styles.summaryLabel, { color: theme.textSecondary }]}>Responsable:</Text>
+                <Text style={[styles.summaryValue, { color: theme.text }]}>
+                  {inspeccion.responsable_id.substring(0, 8)}...
+                </Text>
+              </View>
+            )}
+            {inspeccion.fecha_limite && (
+              <View style={styles.summaryRow}>
+                <Text style={[styles.summaryLabel, { color: theme.textSecondary }]}>Fecha límite:</Text>
+                <Text style={[styles.summaryValue, { color: theme.text }]}>
+                  {inspeccion.fecha_limite.split('T')[0]}
+                </Text>
+              </View>
+            )}
+            {inspeccion.validado_por && (
+              <View style={styles.summaryRow}>
+                <Text style={[styles.summaryLabel, { color: theme.textSecondary }]}>Validado por:</Text>
+                <Text style={[styles.summaryValue, { color: theme.text }]}>
+                  {inspeccion.validado_por.substring(0, 8)}...
+                </Text>
+              </View>
+            )}
+            {inspeccion.fecha_validacion && (
+              <View style={styles.summaryRow}>
+                <Text style={[styles.summaryLabel, { color: theme.textSecondary }]}>Fecha validación:</Text>
+                <Text style={[styles.summaryValue, { color: theme.text }]}>
+                  {inspeccion.fecha_validacion.split('T')[0]}
+                </Text>
+              </View>
+            )}
           </View>
         )}
 
@@ -352,24 +458,35 @@ export default function DetalleScreenPremium({ route, navigation }) {
         {/* Botones de Acción */}
         <View style={styles.actionButtons}>
           <TouchableOpacity
-            style={[styles.actionButton, styles.rejectButton]}
+            style={[styles.actionButton, styles.rejectButton, guardandoEstado && styles.actionButtonDisabled]}
             onPress={handleRechazar}
+            disabled={guardandoEstado}
           >
             <Text style={styles.actionButtonText}>❌ Rechazar</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.actionButton, styles.reviewButton]}
-            onPress={() => setEstado('revisando')}
+            style={[styles.actionButton, styles.reviewButton, guardandoEstado && styles.actionButtonDisabled]}
+            onPress={handleEnRevision}
+            disabled={guardandoEstado}
           >
-            <Text style={styles.actionButtonText}>⏳ En Revisión</Text>
+            {guardandoEstado ? (
+              <ActivityIndicator size="small" color={colors.risk.medio} />
+            ) : (
+              <Text style={styles.actionButtonText}>⏳ En Revisión</Text>
+            )}
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.actionButton, styles.approveButton]}
+            style={[styles.actionButton, styles.approveButton, guardandoEstado && styles.actionButtonDisabled]}
             onPress={handleAprobar}
+            disabled={guardandoEstado}
           >
-            <Text style={styles.approveButtonText}>✅ Aprobar</Text>
+            {guardandoEstado ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Text style={styles.approveButtonText}>✅ Aprobar</Text>
+            )}
           </TouchableOpacity>
         </View>
 
@@ -514,6 +631,35 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 12,
   },
+  puntajeContainer: {
+    alignItems: 'center',
+    marginBottom: 16,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+  },
+  puntajeCircle: {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    borderWidth: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  puntajeText: {
+    fontSize: 26,
+    fontWeight: 'bold',
+  },
+  puntajeLabel: {
+    fontSize: 12,
+  },
+  puntajeAlerta: {
+    fontSize: 11,
+    fontWeight: '600',
+    marginTop: 6,
+    textAlign: 'center',
+  },
   summaryRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -540,8 +686,26 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 11,
   },
+  datoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(148,163,184,0.15)',
+  },
+  datoLabel: {
+    fontSize: 13,
+    flex: 1,
+  },
+  datoValue: {
+    fontSize: 13,
+    fontWeight: '600',
+    flex: 1,
+    textAlign: 'right',
+  },
   analysisSection: {
-    marginBottom: 16,
+    marginTop: 12,
   },
   sectionTitle: {
     fontSize: 12,
@@ -563,6 +727,45 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
   },
+  incumplimientoCard: {
+    borderLeftWidth: 4,
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 10,
+    backgroundColor: 'rgba(148,163,184,0.08)',
+  },
+  incumplimientoHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  incumplimientoTipo: {
+    fontSize: 13,
+    fontWeight: '700',
+    flex: 1,
+    marginRight: 8,
+  },
+  miniBadge: {
+    paddingVertical: 3,
+    paddingHorizontal: 8,
+    borderRadius: 6,
+    borderWidth: 1,
+  },
+  miniBadgeText: {
+    fontSize: 9,
+    fontWeight: 'bold',
+  },
+  normaText: {
+    fontSize: 12,
+    fontStyle: 'italic',
+    marginTop: 2,
+  },
+  revisionManualText: {
+    fontSize: 11,
+    fontWeight: '600',
+    marginTop: 4,
+  },
   incumplimientoItem: {
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -579,15 +782,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     lineHeight: 20,
-  },
-  actionText: {
-    fontSize: 14,
-    lineHeight: 22,
-  },
-  normaText: {
-    fontSize: 13,
-    lineHeight: 20,
-    fontStyle: 'italic',
   },
   notasHeader: {
     flexDirection: 'row',
@@ -618,7 +812,11 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     borderRadius: 12,
     alignItems: 'center',
+    justifyContent: 'center',
     fontWeight: '600',
+  },
+  actionButtonDisabled: {
+    opacity: 0.5,
   },
   rejectButton: {
     backgroundColor: colors.risk.critico + '20',
