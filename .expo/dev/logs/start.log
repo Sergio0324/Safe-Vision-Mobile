@@ -1530,3 +1530,143 @@
 {"_e":"metro:client_log","_t":1788933097949,"level":"log","data":["✅ Inspecciones obtenidas:","3"]}
 {"_e":"metro:client_log","_t":1788933098071,"level":"log","data":["✅ API Response:","200","/inspecciones"]}
 {"_e":"metro:client_log","_t":1788933098115,"level":"log","data":["✅ Inspecciones obtenidas:","3"]}
+{"_e":"root:init","_t":1789962399824,"format":"v0-jsonl","version":"57.0.22"}
+{"_e":"env:mode","_t":1789962399839,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1789962399855,"mode":"development","files":[],"env":{}}
+{"_e":"devserver:start","_t":1789962403442,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1789962409627,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1789962412828,"plugins":[]}
+{"_e":"metro:instantiate","_t":1789962419984,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1789962429529,"id":"3","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1789962429530,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789962429533,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789962434293,"id":"3","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1789962434393,"id":"3","progress":0.04591836734693877,"total":14,"current":3}
+{"_e":"metro:bundling:progress","_t":1789962434491,"id":"3","progress":0.08163265306122448,"total":14,"current":4}
+{"_e":"metro:bundling:progress","_t":1789962434597,"id":"3","progress":0.08163265306122448,"total":114,"current":5}
+{"_e":"metro:bundling:progress","_t":1789962434658,"id":"3","progress":0.08163265306122448,"total":114,"current":6}
+{"_e":"metro:bundling:progress","_t":1789962434763,"id":"3","progress":0.08163265306122448,"total":117,"current":7}
+{"_e":"metro:bundling:progress","_t":1789962435100,"id":"3","progress":0.08163265306122448,"total":117,"current":8}
+{"_e":"metro:bundling:progress","_t":1789962435200,"id":"3","progress":0.08163265306122448,"total":120,"current":12}
+{"_e":"metro:bundling:progress","_t":1789962435301,"id":"3","progress":0.08163265306122448,"total":127,"current":14}
+{"_e":"metro:bundling:progress","_t":1789962435404,"id":"3","progress":0.08163265306122448,"total":136,"current":18}
+{"_e":"metro:bundling:progress","_t":1789962435514,"id":"3","progress":0.08163265306122448,"total":155,"current":31}
+{"_e":"metro:bundling:progress","_t":1789962435614,"id":"3","progress":0.08163265306122448,"total":161,"current":37}
+{"_e":"metro:bundling:progress","_t":1789962435715,"id":"3","progress":0.08163265306122448,"total":182,"current":48}
+{"_e":"metro:bundling:progress","_t":1789962435814,"id":"3","progress":0.10354377021860603,"total":202,"current":65}
+{"_e":"metro:bundling:progress","_t":1789962435915,"id":"3","progress":0.16767612960761,"total":232,"current":95}
+{"_e":"metro:bundling:progress","_t":1789962436017,"id":"3","progress":0.2461090087890625,"total":256,"current":127}
+{"_e":"metro:bundling:progress","_t":1789962436120,"id":"3","progress":0.2461090087890625,"total":311,"current":141}
+{"_e":"metro:bundling:progress","_t":1789962436221,"id":"3","progress":0.2461090087890625,"total":352,"current":152}
+{"_e":"metro:bundling:progress","_t":1789962436336,"id":"3","progress":0.2461090087890625,"total":369,"current":173}
+{"_e":"metro:bundling:progress","_t":1789962436436,"id":"3","progress":0.2461090087890625,"total":412,"current":201}
+{"_e":"metro:bundling:progress","_t":1789962436536,"id":"3","progress":0.2534285314003145,"total":439,"current":221}
+{"_e":"metro:bundling:progress","_t":1789962436636,"id":"3","progress":0.26003245471689845,"total":453,"current":231}
+{"_e":"metro:bundling:progress","_t":1789962436728,"id":"3","progress":0.26228869104181585,"total":453,"current":232}
+{"_e":"metro:bundling:progress","_t":1789962436899,"id":"3","progress":0.28798026902497026,"total":464,"current":249}
+{"_e":"metro:bundling:progress","_t":1789962436915,"id":"3","progress":0.29029800832342456,"total":464,"current":250}
+{"_e":"metro:bundling:progress","_t":1789962437015,"id":"3","progress":0.3185221683950708,"total":466,"current":263}
+{"_e":"metro:bundling:progress","_t":1789962437115,"id":"3","progress":0.35367366154943775,"total":491,"current":292}
+{"_e":"metro:bundling:progress","_t":1789962437215,"id":"3","progress":0.38694277388554776,"total":508,"current":316}
+{"_e":"metro:bundling:progress","_t":1789962437316,"id":"3","progress":0.38694277388554776,"total":562,"current":346}
+{"_e":"metro:bundling:progress","_t":1789962437415,"id":"3","progress":0.41985110370678885,"total":588,"current":381}
+{"_e":"metro:bundling:progress","_t":1789962437516,"id":"3","progress":0.4832229264693092,"total":597,"current":415}
+{"_e":"metro:bundling:progress","_t":1789962437615,"id":"3","progress":0.5380994632963989,"total":608,"current":446}
+{"_e":"metro:bundling:progress","_t":1789962437715,"id":"3","progress":0.589025051226122,"total":615,"current":472}
+{"_e":"metro:bundling:progress","_t":1789962437816,"id":"3","progress":0.589025051226122,"total":657,"current":501}
+{"_e":"metro:bundling:progress","_t":1789962437919,"id":"3","progress":0.589025051226122,"total":693,"current":518}
+{"_e":"metro:bundling:progress","_t":1789962438022,"id":"3","progress":0.589025051226122,"total":714,"current":540}
+{"_e":"metro:bundling:progress","_t":1789962438137,"id":"3","progress":0.600941799256064,"total":734,"current":569}
+{"_e":"metro:bundling:progress","_t":1789962438238,"id":"3","progress":0.6130992353368363,"total":765,"current":599}
+{"_e":"metro:bundling:progress","_t":1789962438346,"id":"3","progress":0.618790518169983,"total":778,"current":612}
+{"_e":"metro:bundling:progress","_t":1789962438446,"id":"3","progress":0.618790518169983,"total":826,"current":641}
+{"_e":"metro:bundling:progress","_t":1789962438546,"id":"3","progress":0.618790518169983,"total":847,"current":652}
+{"_e":"metro:bundling:progress","_t":1789962438649,"id":"3","progress":0.618790518169983,"total":854,"current":662}
+{"_e":"metro:bundling:progress","_t":1789962438750,"id":"3","progress":0.618790518169983,"total":856,"current":673}
+{"_e":"metro:bundling:progress","_t":1789962438851,"id":"3","progress":0.6288858842617632,"total":860,"current":682}
+{"_e":"metro:bundling:progress","_t":1789962438950,"id":"3","progress":0.6677008316186557,"total":864,"current":706}
+{"_e":"metro:bundling:progress","_t":1789962439053,"id":"3","progress":0.7165729161336204,"total":873,"current":739}
+{"_e":"metro:bundling:progress","_t":1789962439153,"id":"3","progress":0.7363495252008766,"total":888,"current":762}
+{"_e":"metro:bundling:progress","_t":1789962439253,"id":"3","progress":0.7624928736314028,"total":907,"current":792}
+{"_e":"metro:bundling:progress","_t":1789962439355,"id":"3","progress":0.7753940212746141,"total":921,"current":811}
+{"_e":"metro:bundling:progress","_t":1789962439456,"id":"3","progress":0.8236050410452075,"total":930,"current":844}
+{"_e":"metro:bundling:progress","_t":1789962439560,"id":"3","progress":0.8584348110116466,"total":939,"current":870}
+{"_e":"metro:bundling:progress","_t":1789962439664,"id":"3","progress":0.8690031600114909,"total":944,"current":880}
+{"_e":"metro:bundling:progress","_t":1789962439773,"id":"3","progress":0.8790302623106857,"total":945,"current":886}
+{"_e":"metro:bundling:progress","_t":1789962439875,"id":"3","progress":0.9123337331096327,"total":959,"current":916}
+{"_e":"metro:bundling:progress","_t":1789962439977,"id":"3","progress":0.9154473403444597,"total":972,"current":930}
+{"_e":"metro:bundling:progress","_t":1789962440091,"id":"3","progress":0.9316102496623989,"total":977,"current":943}
+{"_e":"metro:bundling:progress","_t":1789962440190,"id":"3","progress":0.9676462367032745,"total":981,"current":965}
+{"_e":"metro:bundling:progress","_t":1789962440303,"id":"3","progress":0.9979643771180642,"total":982,"current":981}
+{"_e":"metro:bundling:progress","_t":1789962440864,"id":"3","progress":0.999,"total":982,"current":982}
+{"_e":"metro:bundling:progress","_t":1789962440965,"id":"3","progress":0.999,"total":992,"current":990}
+{"_e":"metro:bundling:failed","_t":1789962440978,"id":"3","message":"Unable to resolve \"expo-print\" from \"src\\screens\\DashboardScreen.js\"\n  14 | import { LineChart, BarChart, PieChart } from 'react-native-chart-kit';\n  15 | import { LinearGradient } from 'expo-linear-gradient';\n> 16 | import * as Print from 'expo-print';\n     |                         ^\n  17 | import * as Sharing from 'expo-sharing';\n  18 | import * as FileSystem from 'expo-file-system/legacy';\n  19 | import { listarInspecciones } from '../services/api';","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\DashboardScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"expo-print\"\u001b[39m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/DashboardScreen\"\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules\\expo\\AppEntry.js\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"../../App\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"./node_modules/\u001b[1mexpo\u001b[22m/AppEntry\"\u001b[39m\u001b[90m\u001b[39m\n","filename":null,"targetModuleName":"expo-print","originModulePath":"src\\screens\\DashboardScreen.js"}
+{"_e":"root:init","_t":1789962509863,"format":"v0-jsonl","version":"57.0.22"}
+{"_e":"env:mode","_t":1789962509863,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1789962509866,"mode":"development","files":[],"env":{}}
+{"_e":"devserver:start","_t":1789962510103,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1789962510456,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1789962510700,"plugins":[]}
+{"_e":"metro:instantiate","_t":1789962514760,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1789962539434,"id":"3","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1789962539434,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789962539437,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789962539537,"id":"3","progress":0.060434027777777774,"total":240,"current":59}
+{"_e":"metro:bundling:progress","_t":1789962539637,"id":"3","progress":0.2446295873004026,"total":463,"current":229}
+{"_e":"metro:bundling:progress","_t":1789962539737,"id":"3","progress":0.49527423234989476,"total":692,"current":487}
+{"_e":"metro:bundling:progress","_t":1789962539844,"id":"3","progress":0.8335537652662727,"total":839,"current":766}
+{"_e":"metro:bundling:progress","_t":1789962539944,"id":"3","progress":0.9657110864348037,"total":983,"current":966}
+{"_e":"metro:bundling:failed","_t":1789962539953,"id":"3","message":"Unable to resolve \"expo-sharing\" from \"src\\screens\\DashboardScreen.js\"\n  15 | import { LinearGradient } from 'expo-linear-gradient';\n  16 | import * as Print from 'expo-print';\n> 17 | import * as Sharing from 'expo-sharing';\n     |                           ^\n  18 | import * as FileSystem from 'expo-file-system/legacy';\n  19 | import { listarInspecciones } from '../services/api';\n  20 | import { colors, themes } from '../styles/colors';","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\DashboardScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"expo-sharing\"\u001b[39m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/DashboardScreen\"\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules\\expo\\AppEntry.js\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"../../App\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"./node_modules/\u001b[1mexpo\u001b[22m/AppEntry\"\u001b[39m\u001b[90m\u001b[39m\n","filename":null,"targetModuleName":"expo-sharing","originModulePath":"src\\screens\\DashboardScreen.js"}
+{"_e":"root:init","_t":1789962563023,"format":"v0-jsonl","version":"57.0.22"}
+{"_e":"env:mode","_t":1789962563023,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1789962563026,"mode":"development","files":[],"env":{}}
+{"_e":"devserver:start","_t":1789962563253,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1789962563618,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1789962563871,"plugins":[]}
+{"_e":"metro:instantiate","_t":1789962567969,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1789962571275,"id":"1","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1789962571275,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789962571277,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789962571377,"id":"1","progress":0.10143788703321449,"total":292,"current":93}
+{"_e":"metro:bundling:progress","_t":1789962571477,"id":"1","progress":0.25556569218828723,"total":542,"current":274}
+{"_e":"metro:bundling:progress","_t":1789962571577,"id":"1","progress":0.5163561169339186,"total":732,"current":526}
+{"_e":"metro:bundling:progress","_t":1789962571680,"id":"1","progress":0.8343077947059658,"total":843,"current":770}
+{"_e":"metro:bundling:progress","_t":1789962571780,"id":"1","progress":0.9272976680384086,"total":972,"current":936}
+{"_e":"metro:bundling:progress","_t":1789962571891,"id":"1","progress":0.9919840002580602,"total":996,"current":992}
+{"_e":"metro:bundling:progress","_t":1789962572028,"id":"1","progress":0.9939849760487733,"total":996,"current":993}
+{"_e":"metro:bundling:progress","_t":1789962572129,"id":"1","progress":0.9939970120601926,"total":998,"current":995}
+{"_e":"metro:bundling:progress","_t":1789962572229,"id":"1","progress":0.9939970120601926,"total":1009,"current":999}
+{"_e":"metro:bundling:progress","_t":1789962572329,"id":"1","progress":0.9939970120601926,"total":1015,"current":1007}
+{"_e":"metro:bundling:progress","_t":1789962572449,"id":"1","progress":0.9939970120601926,"total":1053,"current":1015}
+{"_e":"metro:bundling:progress","_t":1789962572550,"id":"1","progress":0.9939970120601926,"total":1106,"current":1023}
+{"_e":"metro:bundling:progress","_t":1789962572650,"id":"1","progress":0.9939970120601926,"total":1106,"current":1046}
+{"_e":"metro:bundling:progress","_t":1789962572752,"id":"1","progress":0.9939970120601926,"total":1117,"current":1075}
+{"_e":"metro:bundling:progress","_t":1789962572853,"id":"1","progress":0.9939970120601926,"total":1127,"current":1106}
+{"_e":"metro:bundling:progress","_t":1789962572954,"id":"1","progress":0.9939970120601926,"total":1127,"current":1121}
+{"_e":"metro:bundling:progress","_t":1789962573054,"id":"1","progress":0.9939970120601926,"total":1127,"current":1123}
+{"_e":"metro:bundling:progress","_t":1789962573153,"id":"1","progress":0.994701996073989,"total":1131,"current":1128}
+{"_e":"metro:bundling:progress","_t":1789962573257,"id":"1","progress":0.999,"total":1135,"current":1135}
+{"_e":"metro:bundling:done","_t":1789962573744,"id":"1","total":1135,"ms":2469.0209}
+{"_e":"metro:client_log","_t":1789962581358,"level":"warn","data":["SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context"]}
+{"_e":"metro:client_log","_t":1789962581456,"level":"log","data":["📥 Obteniendo lista de inspecciones..."]}
+{"_e":"metro:client_log","_t":1789962581457,"level":"log","data":["📥 Obteniendo lista de inspecciones..."]}
+{"_e":"metro:client_log","_t":1789962584748,"level":"log","data":["✅ API Response:","200","/inspecciones"]}
+{"_e":"metro:client_log","_t":1789962584797,"level":"log","data":["✅ Inspecciones obtenidas:","14"]}
+{"_e":"metro:client_log","_t":1789962584798,"level":"log","data":["✅ API Response:","200","/inspecciones"]}
+{"_e":"metro:client_log","_t":1789962584798,"level":"log","data":["✅ Inspecciones obtenidas:","14"]}
+{"_e":"metro:client_log","_t":1789962596047,"level":"log","data":["📥 Obteniendo lista de inspecciones..."]}
+{"_e":"metro:client_log","_t":1789962596110,"level":"log","data":["📥 Obteniendo lista de inspecciones..."]}
+{"_e":"metro:client_log","_t":1789962596241,"level":"log","data":["✅ API Response:","200","/inspecciones"]}
+{"_e":"metro:client_log","_t":1789962596289,"level":"log","data":["✅ Inspecciones obtenidas:","14"]}
+{"_e":"metro:client_log","_t":1789962596493,"level":"log","data":["✅ API Response:","200","/inspecciones"]}
+{"_e":"metro:client_log","_t":1789962596579,"level":"log","data":["✅ Inspecciones obtenidas:","14"]}
+{"_e":"metro:client_log","_t":1789962600775,"level":"log","data":["✅ Validando inspección:","40499990-06e3-4686-84bc-e1276b5873f6","{\"estado\": \"aprobado\"}"]}
+{"_e":"metro:client_log","_t":1789962600910,"level":"error","data":["❌ API Error:","Request failed with status code 405","/inspecciones/40499990-06e3-4686-84bc-e1276b5873f6/validar"]}
+{"_e":"metro:client_log","_t":1789962600973,"level":"error","data":["❌ Error al validar inspección:","Request failed with status code 405","Method Not Allowed"]}
+{"_e":"metro:client_log","_t":1789962600973,"level":"warn","data":["⚠️ No se pudo sincronizar el estado con el backend:","\"Method Not Allowed\""]}
+{"_e":"metro:client_log","_t":1789962603882,"level":"log","data":["📥 Obteniendo lista de inspecciones..."]}
+{"_e":"metro:client_log","_t":1789962604062,"level":"log","data":["✅ API Response:","200","/inspecciones"]}
+{"_e":"metro:client_log","_t":1789962604111,"level":"log","data":["✅ Inspecciones obtenidas:","14"]}
+{"_e":"metro:client_log","_t":1789962604869,"level":"log","data":["📥 Obteniendo lista de inspecciones..."]}
+{"_e":"metro:client_log","_t":1789962605046,"level":"log","data":["✅ API Response:","200","/inspecciones"]}
+{"_e":"metro:client_log","_t":1789962605102,"level":"log","data":["✅ Inspecciones obtenidas:","14"]}
