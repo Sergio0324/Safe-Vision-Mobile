@@ -1763,3 +1763,44 @@
 {"_e":"root:init","_t":1789618524543,"format":"v0-jsonl","version":"57.0.25"}
 {"_e":"env:mode","_t":1789618524545,"nodeEnv":"development","babelEnv":"development","mode":"development"}
 {"_e":"env:load","_t":1789618524548,"mode":"development","files":[],"env":{}}
+{"_e":"root:init","_t":1789618552348,"format":"v0-jsonl","version":"57.0.25"}
+{"_e":"env:mode","_t":1789618552350,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1789618552355,"mode":"development","files":[],"env":{}}
+{"_e":"devserver:start","_t":1789618553036,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1789618553683,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1789618554144,"plugins":[]}
+{"_e":"metro:instantiate","_t":1789618562823,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1789618629794,"id":"6","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1789618629795,"id":"6","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1789618629871,"id":"6","total":1,"ms":76.5448}
+{"_e":"metro:client_log","_t":1789618635318,"level":"warn","data":["SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context"]}
+{"_e":"metro:client_log","_t":1789618635506,"level":"log","data":["📥 Obteniendo lista de inspecciones..."]}
+{"_e":"metro:client_log","_t":1789618635507,"level":"log","data":["📥 Obteniendo lista de inspecciones..."]}
+{"_e":"metro:client_log","_t":1789618636226,"level":"log","data":["✅ API Response:","200","/inspecciones"]}
+{"_e":"metro:client_log","_t":1789618636226,"level":"log","data":["✅ Inspecciones obtenidas:","14"]}
+{"_e":"metro:client_log","_t":1789618636226,"level":"log","data":["✅ API Response:","200","/inspecciones"]}
+{"_e":"metro:client_log","_t":1789618636226,"level":"log","data":["✅ Inspecciones obtenidas:","14"]}
+{"_e":"metro:client_log","_t":1789618640049,"level":"log","data":["✅ Validando inspección:","40499990-06e3-4686-84bc-e1276b5873f6","{\"estado\": \"aprobado\"}"]}
+{"_e":"metro:client_log","_t":1789618640179,"level":"error","data":["❌ API Error:","Request failed with status code 422","/inspecciones/40499990-06e3-4686-84bc-e1276b5873f6/validar"]}
+{"_e":"metro:client_log","_t":1789618640180,"level":"error","data":["❌ Error al validar inspección:","Request failed with status code 422","[{\"input\": {\"estado\": \"aprobado\"}, \"loc\": [\"body\", \"accion\"], \"msg\": \"Field required\", \"type\": \"missing\", \"url\": \"https://errors.pydantic.dev/2.4/v/missing\"}]"]}
+{"_e":"metro:client_log","_t":1789618830572,"level":"log","data":["📥 Obteniendo lista de inspecciones..."]}
+{"_e":"metro:client_log","_t":1789618830869,"level":"log","data":["✅ API Response:","200","/inspecciones"]}
+{"_e":"metro:client_log","_t":1789618830957,"level":"log","data":["✅ Inspecciones obtenidas:","14"]}
+{"_e":"metro:client_log","_t":1789619007986,"level":"log","data":["📝 Actualizando inspección:","aprobado"]}
+{"_e":"metro:client_log","_t":1789619008268,"level":"error","data":["❌ API Error:","Request failed with status code 405","/inspecciones/aprobado"]}
+{"_e":"metro:client_log","_t":1789619008435,"level":"error","data":["❌ Error al actualizar inspección:","Request failed with status code 405"]}
+{"_e":"metro:client_log","_t":1789619029467,"level":"log","data":["📝 Actualizando inspección:","revisando"]}
+{"_e":"metro:client_log","_t":1789619029694,"level":"error","data":["❌ API Error:","Request failed with status code 405","/inspecciones/revisando"]}
+{"_e":"metro:client_log","_t":1789619029897,"level":"error","data":["❌ Error al actualizar inspección:","Request failed with status code 405"]}
+{"_e":"metro:client_log","_t":1789619036348,"level":"log","data":["📝 Actualizando inspección:","aprobado"]}
+{"_e":"metro:client_log","_t":1789619036502,"level":"error","data":["❌ API Error:","Request failed with status code 405","/inspecciones/aprobado"]}
+{"_e":"metro:client_log","_t":1789619036503,"level":"error","data":["❌ Error al actualizar inspección:","Request failed with status code 405"]}
+{"_e":"metro:client_log","_t":1789619120829,"level":"log","data":["📝 Actualizando inspección:","aprobado"]}
+{"_e":"metro:client_log","_t":1789619120989,"level":"error","data":["❌ API Error:","Request failed with status code 405","/inspecciones/aprobado"]}
+{"_e":"metro:client_log","_t":1789619121139,"level":"error","data":["❌ Error al actualizar inspección:","Request failed with status code 405"]}
+{"_e":"metro:client_log","_t":1789619300752,"level":"log","data":["📥 Obteniendo lista de inspecciones..."]}
+{"_e":"metro:client_log","_t":1789619301261,"level":"log","data":["📥 Obteniendo lista de inspecciones..."]}
+{"_e":"metro:client_log","_t":1789619301476,"level":"log","data":["✅ API Response:","200","/inspecciones"]}
+{"_e":"metro:client_log","_t":1789619301476,"level":"log","data":["✅ Inspecciones obtenidas:","14"]}
+{"_e":"metro:client_log","_t":1789619301476,"level":"log","data":["✅ API Response:","200","/inspecciones"]}
+{"_e":"metro:client_log","_t":1789619301476,"level":"log","data":["✅ Inspecciones obtenidas:","14"]}
